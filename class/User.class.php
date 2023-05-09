@@ -48,6 +48,7 @@ class User {
         }
         
     }
+    public function setFirstName(string $firstName)
 }
 
 ?>

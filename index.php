@@ -2,9 +2,18 @@
 require_once('class/User.class.php');
 
 $user = new User('jkowalski', 'tajneHaslo');
-//$user->register();
-$user->login();
+/*
+if($user->register()){
+    echo "zarejestrowano pomyslnie";
+} else {
+    echo "blad rejestracji uzytkownika"
+}
+*/
 
-echo '<pre>';
-var_dump($user);
+if($user->login()) {
+    echo "zalogowano pomyslnie";
+} else {
+    echo "bledny login lub haslo";
+}
+
 ?>

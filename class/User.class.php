@@ -21,10 +21,11 @@ class User {
         $preparedQuery = $db->prepare($query);
         $preparedQuery->bind_param('ssss', $this->login, $passwordHash, 
                                              $this->firstName, $this->lastName);
-        $preparedQuery->execute();                                     
+        $result = $preparedQuery->execute();
+        return $result;                                     
     }
 
-    public function login() {
+    public function login() : bool {
         $query = "SELECT * FROM user WHERE login = ? LIMIT 1";
         $db = new mysqli('localhost', 'root', '', 'loginForm');
         $preparedQuery = $db->prepare($query);
@@ -38,12 +39,12 @@ class User {
                 $this->id = $row['id'];
                 $this->firstName = $row['firstName'];
                 $this->lastName = $row['lastName'];
-                echo "zalogowano pomyslnie";
+                return true;
             } else {
-                echo "bledny login lub haslo";
+                return false;
             }
         } else {
-            return;
+            return false;
         }
         
     }

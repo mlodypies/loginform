@@ -111,6 +111,27 @@ Route::add('/profile', function() {
         $twig->display('message.html.twig', 
                                 ['message' => "Zapisano zmiany w profilu"]);
     }
+    if(isset($_REQUEST['password']) && isset($_REQUEST['passwordRepeat'])) {
+        $password = $_REQUEST['password'];
+        $passwordRepeat = $_REQUEST['passwordRepeat'];
+        if($password == $passwordRepeat) {
+            //hasla zgodne
+            $user = $_SESSION['user'];
+            if($user->changePassword($password)) {
+                $twig->display('message.html.twig', 
+                 ['message' => "Haslo zostalo zmienione"]); 
+            } else {
+                $twig->display('message.html.twig', 
+                   ['message' => "Nastapil blad"]);
+            }
+        } else {
+            //hasla niezgodne
+            $twig->display('message.html.twig', 
+            ['message' => "Podane hasla nie sa zgodne"]);
+
+        }
+        
+    }
 }, "post");
 
 Route::run('/loginform');

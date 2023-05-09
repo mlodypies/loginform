@@ -1,30 +1,23 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logowanie</title>
-</head>
-<body>
-<form action="" method="post">
-    <label for="loginID">Login:</label><br>
-    <input type="text" name="login" id="loginID"><br>
-    <label for="passwordID">Haslo:</label><br>
-    <input type="password" name="password" id="passwordID"><br>
-    <input type="submit" value="Zaloguj">
-</form>
+
 <?php
+require_once('config.php');
+
 if(isset($_REQUEST['login']) && isset($_REQUEST['password'])){
-    require_once('config.php');
-    require_once('class/User.class.php');
+    
+    
     $user = new User($_REQUEST['login'], $_REQUEST['password']);
     if($user->login()) {
-        echo "zalogowano pomyslnie uzytkownika: ".$user->getName();
+        //echo "zalogowano pomyslnie uzytkownika: ".$user->getName();
+        $v = array(
+            'message' => "zalogowano pomyslnie uzytkownika: " .$user->getName(),
+        );
+        $twig->display("message.html.twig", $v);
     } else {
-        echo "bledny login lub haslo";
+       //echo "bledny login lub haslo";
+       $twig->display('message.html.twig', 
+                        ["message" => "bledny login lub haslo"]);
     }
+} else {
+    $twig->display('login.html.twig');
 }
 ?>
-</body>
-</html>

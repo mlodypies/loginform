@@ -3,6 +3,10 @@
 
 require_once('config.php');
 
-$twig->display('test.html.twig');
+
+$v = array(
+    'testVariable' => "Wartosc testowa",
+);
+$twig->display('test.html.twig', $v);
 
 ?>
